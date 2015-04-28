@@ -23,35 +23,143 @@ To accomplish the above task you will want to work with loops to dynamically cre
  */
 
 
-
-$minWarn = "Minimum %d larger than maximum.";
-$notIntWarn = " must be an integer.";
+$queryS = $_SERVER['QUERY_STRING'];
 $getA = array();
+$expPara = array( 'min-multiplicand', 'max-multiplicand', 'min-multiplier', 'max-multiplier');
+$errMsg = '';
 
-//Check Each parameter for Integer
-if(sizeof($_Get)> 4){
-    echo "Too many parameters! ";
-}else {
+ function checkMissing($para){
+     global $errMsg;
+     foreach ($para as  $req) {
 
+        if(!strstr($_SERVER['QUERY_STRING'], $req)){
+            $errMsg = $req .' was missing!';
+           return false;
+               break;
+       }
+    }
+    return true;
+};
+
+function checkInt(){
+    global $errMsg;
     //check for int  b/c _get is a string
     foreach ($_GET as $k => $v) {
         if (((int)$v != $v) || (!is_numeric($v))) {
-            echo $k . ' value of "' . $v . '" ' . $notIntWarn;
-        }
-    }
-    //in Heaven everything is fine
-    if($_GET['min-multiplicand'] > $_GET['max-multiplicand']){
-        echo  'Min-multiplicand  larger than maximum.';
+            $errMsg .= $k . ' value of "' . $v . '" Must be an Integer';
 
+            return false;
+        }
+        //in Heaven everything is fin
     }
-    if($_GET['min-multiplier'] > $_GET['max-multiplier']) {
-        echo 'Min-Multiplier is larger than maximum.';
+    return true;
+};
+
+function checkMinMax(){
+    global $errMsg;
+    if ($_GET['min-multiplicand'] >= $_GET['max-multiplicand']){
+        $errMsg .=  'Min-multiplicand of '. $_GET['min-multiplicand'].' is larger than maximum of ' . $_GET['max-multiplicand'];
+        return false;
     }
+    if ($_GET['min-multiplier'] >= $_GET['max-multiplier']) {
+        $errMsg .= 'Min-Multiplier of ' . $_GET['min-multiplier'] . 'is larger than maximum of ' . $_GET['max-multiplier'];
+        return false;
+    }
+    return true;
+}
+
+function tNumber(){
+
 
 }
 
+function makeTable(){
 
-//ho sizeof($_GET);
-//ho $_GET['min-multiplicand'];
+    $xmd = $_GET['max-multiplicand'];
+    $mmd = $_GET['min-multiplicand'];
+    $xmp = $_GET['max-multiplier'];
+    $mmp = $_GET['min-multiplier'];
+
+    $high = $xmp -$mmp + 2;
+    $wide = $xmd - $mmd + 2;
+
+
+    for($n = $mmp; $n-$mmp < $high; $n++) {
+        echo '<tr>';
+
+        for ($i = $mmd; $i-$mmd < $wide; $i++) {
+
+            if($n == $mmp && $i ==$mmd) {
+
+                echo '<td></td>';
+
+            }elseif($i == $mmd) {
+                $disp = $n-1;
+                echo '<td>N:' . $disp . '</td>';
+
+            }elseif($n == $mmp){
+                $disp = $i-1;
+                echo '<td>I:' . $disp . '</td>';
+
+           }else{
+                $disp = ($i-1) * ($n-1);
+                echo '<td>I:' . $disp . '</td>';
+
+            }
+        }
+
+        echo '</tr>';
+    }
+}
+
+
+//Check Each parameter for Integer
+if(!checkMissing($expPara) || !checkInt() || !checkMinMax()){
+
+    echo $errMsg;
+
+}else {
+
+
+        //(max-multiplicand - min-multiplicand + 2)high
+        $high = $_GET['max-multiplier'] - $_GET['min-multiplier'] + 2;
+        $wide = $_GET['max-multiplicand'] - $_GET['min-multiplicand'] +2;
+        //HTML
+    ?>
+
+    <!DOCTYPE html>
+    <html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta name="author" content="Robert Jackson">
+        <meta name="description" content="">
+        <title>Multable.php</title>
+        <script src="" type="application/javascript"></script>
+        <link rel="stylesheet" href="" type="text/css">
+    </head>
+    <body>
+    <table>
+        <tbody>
+        <?php
+            makeTable();
+        ?>
+
+        </tbody>
+    </table>
+
+
+
+    </body>
+    </html>
+
+
+
+        <?php
+        //(max-multiplier - min-multiplier + 2)wide
+        //create Table
+
+
+    };
+
 
 ?>
