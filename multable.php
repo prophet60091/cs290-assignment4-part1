@@ -156,17 +156,14 @@ if(!checkMissing($expPara) || !checkInt() || !checkMinMax()){
         <link rel="stylesheet" href="" type="text/css">
     </head>
     <body>
-    <table>
-        <tbody>
-        <?php
-            makeTable();
-        ?>
+        <table>
+            <tbody>
+            <?php
+                makeTable();
+            ?>
 
-        </tbody>
-    </table>
-
-
-
+            </tbody>
+        </table>
     </body>
     </html>
 

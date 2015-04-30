@@ -1,0 +1,23 @@
+
+body{font-family: Arial; font-size:20px;}
+
+input{font-size: 95%;
+height:30px;
+border-radius: 10px;
+border-color:green;
+margin: 10px 5px 10px 5px;
+padding:5px;}
+input:hover{border-color: darkgreen;}
+
+#submit{
+    height: 39px;
+    width: 154px;
+}
+
+button{height:30px;}
+
+.missedElement{
+
+    border: 2px red solid;
+
+}
