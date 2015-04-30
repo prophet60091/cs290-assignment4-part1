@@ -1,6 +1,5 @@
 <?php
 /**
-
  * User: Robert
  * Date: 4/27/2015
  * Time: 5:17 PM
@@ -24,7 +23,6 @@ if($_GET){
     session_set_cookie_params(time()+10000, '/cs290-assignment4', '' ,false, false);
 
 }
-
 
 ?>
 <!DOCTYPE html>
