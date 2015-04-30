@@ -15,7 +15,8 @@ $aGet = array('GET');
 $aPost = array('POST');
 //swap for undefined in an Array
 //@param typeA a reference to an Array such as GET or POST
-//@ TypeS an Array which holds one time, the tyoe of post... Don't ask it's what was stated as a req. Above.
+//@ TypeS an Array which holds one type, the tyoe of post... Don't ask it's what was stated as a req. above.
+// That first JSON out put is an array with either value so...
 function swapUndies($typeS, &$typeA){
     $a = array();
 
@@ -32,7 +33,7 @@ function swapUndies($typeS, &$typeA){
     return json_encode($a);
 
 }
-
+//Change the output based on GET or POST
 if($_GET){
 
     echo swapUndies($aGet, $_GET);

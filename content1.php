@@ -11,9 +11,9 @@
  *
  *
  */
-//REceived logout infor killing the session
+//REceived logout info killing the session
 if($_GET){
-
+    $_SESSION['on']=0;
     session_destroy();
     header("location:login.php");
 
@@ -21,7 +21,8 @@ if($_GET){
 
     //user logging in starting the session
     session_start();
-    session_regenerate_id(true);
+    session_set_cookie_params(time()+10000, '/cs290-assignment4', '' ,false, false);
+
 }
 
 
@@ -38,43 +39,55 @@ if($_GET){
         </head>
         <body>
 <?php
-$aPost = array('POST');
+
 $toLogin = '<a href="login.php"> here </a>';
 $logout = "<a href=" . $_SERVER['PHP_SELF'] ."?sessh=FALSE> here </a>";
 
+//If there is not a Post and no session, we don't know how the user got here send them back.
+if(!$_POST && $_SESSION['on'] == 0 ){
 
-if(!$_POST && !$_SESSION['on'] ){
     session_destroy();
     header("location:login.php");
 
 }else{
 
+    //User clicked login but didn't give a value send em back
     if(!$_POST['username']){
+
+        $_SESSION["on"] = 1;
         echo "A username must be entered. Click" . $logout. " to return to the login screen.";
+
 
     }else{
             //Must be legit start a session
-            $_SESSION["on"] = true;
+            $_SESSION["on"] = 1;
 
             //First Time
             if(!isset($_COOKIE[$_POST['username']])){
                 setcookie($_POST['username'], 1);
                 echo "This is your first visit here, " .  $_POST['username'] ;
+                ?>
+                <br />
+                <?php
+                echo "Click" . $logout . " to return to the login screen.";
 
             }else{
                 //Other then first time
-                $incCookie =  $_COOKIE[$_POST['username']] + 1;
-                $ckvar = $_POST['username'];
+                $incCookie =  $_COOKIE[$_POST['username']] + 1; // increment their visit count
+                $ckvar = $_POST['username']; //shortening their entry
 
                 setcookie($ckvar,  $incCookie);
-                echo "you've been here " .  $incCookie . ' times';
 
+                echo "you've been here " .  $incCookie . ' times';
+                ?>
+                <br />
+                <?php
                 echo "Click" . $logout . " to return to the login screen.";
 
             }
     }
 };
-
+print_r($_SESSION);
 ?>
 
         </body>
