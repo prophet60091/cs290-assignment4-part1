@@ -90,24 +90,22 @@ function makeTable(){
         for ($i = $mmd; $i-$mmd < $wide; $i++) {
 
             if($n == $mmp && $i ==$mmd) {
-
                 echo '<td></td>';
 
             }elseif($i == $mmd) {
                 $disp = $n-1;
-                echo '<td>N:' . $disp . '</td>';
+                echo '<td>' . $disp . '</td>';
 
             }elseif($n == $mmp){
                 $disp = $i-1;
-                echo '<td>I:' . $disp . '</td>';
+                echo '<td>' . $disp . '</td>';
 
            }else{
                 $disp = ($i-1) * ($n-1);
-                echo '<td>I:' . $disp . '</td>';
+                echo '<td>' . $disp . '</td>';
 
             }
         }
-
         echo '</tr>';
     }
 }
@@ -116,7 +114,27 @@ function makeTable(){
 //Check Each parameter for Integer
 if(!checkMissing($expPara) || !checkInt() || !checkMinMax()){
 
-    echo $errMsg;
+    ?>
+    <!DOCTYPE html>
+    <html>
+        <head lang="en">
+            <meta charset="UTF-8">
+            <meta name="author" content="Robert Jackson">
+            <meta name="description" content="">
+            <title>Multable.php</title>
+            <script src="" type="application/javascript"></script>
+            <link rel="stylesheet" href="" type="text/css">
+        </head>
+        <body>
+
+            <?php
+            echo $errMsg;
+            ?>
+
+        </body>
+    </html>
+    <?php
+
 
 }else {
 
