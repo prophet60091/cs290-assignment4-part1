@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+
 /**
  * User: Robert
  * Date: 4/27/2015

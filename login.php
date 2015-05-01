@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+
 /**
 
  * User: Robert
@@ -23,10 +25,14 @@ To accomplish the above task you will want to work with loops to dynamically cre
  */
 session_start();
 
-if($_SESSION['on'] == true){
+//if the user tries to acces the login screen again but didn't log out push them to content 1.
 
-  header("location:content1.php");
-}
+    if(isset($_SESSION) && $_SESSION['on'] == true){
+
+      header("location:content1.php");
+    }
+
+//HTML headers
 ?>
     <!DOCTYPE html>
     <html>
