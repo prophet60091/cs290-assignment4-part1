@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-
 /**
  * User: Robert
  * Date: 4/27/2015
@@ -14,12 +12,13 @@ error_reporting(E_ALL);
  */
 session_start();
 //Received logout info killing the session dir
-if(isset($_GET) && $_GET['sessh'] == 'FALSE'){
+if($_GET['sessh'] == 'FALSE'){
 
     session_destroy();
     header("location:login.php");
 
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,7 +31,7 @@ if(isset($_GET) && $_GET['sessh'] == 'FALSE'){
 </head>
 <body>
 <div class="content">
-    <h1>Welcome to content 1</h1>
+    <h1>Welcome to Content 1</h1>
     <?php
 
     $toLogin = '<a href="login.php"> here </a>';
@@ -40,9 +39,9 @@ if(isset($_GET) && $_GET['sessh'] == 'FALSE'){
     $content2 = '<a href="content2.php"> Content 2 </a>';
 
     //User clicked login but didn't give a value send em back, or they navigated  here without a session
-    if(!$_POST['username'] && isset($_SESSION) && $_SESSION["on"] == false ){
+    if(!$_POST['username'] && $_SESSION["on"] == false ){
 
-        if(isset($_SESSION) && $_SESSION["on"] == false){
+        if($_SESSION["on"] == false){
             header("location:login.php");
         }
         echo "A username must be entered. Click" . $logout. " to return to the login screen.";
@@ -65,8 +64,7 @@ if(isset($_GET) && $_GET['sessh'] == 'FALSE'){
 
         }else{
             //Other then first time
-
-            $incCookie =  $_COOKIE[$_COOKIE['username']] + 1; // increment their visit count
+            $incCookie =  $_COOKIE[$_POST['username']] + 1; // increment their visit count
             $ckvar = $_POST['username']; //shortening their entry
 
             setcookie($ckvar,  $incCookie);

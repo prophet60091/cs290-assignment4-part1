@@ -32,7 +32,10 @@ input:hover{border-color: darkgreen;}
 button{height:30px;}
 
 .missedElement{
-
+    height:30px;
+    border-radius: 10px;
+    margin: 10px 5px 10px 5px;
+    padding:5px;
     border: 2px red solid;
 
 }

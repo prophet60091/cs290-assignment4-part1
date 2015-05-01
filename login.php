@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 /**
 
@@ -25,10 +26,10 @@ To accomplish the above task you will want to work with loops to dynamically cre
  */
 session_start();
 
-//if the user tries to acces the login screen again but didn't log out push them to content 1.
+//if the user tries to access the login screen again but didn't log out push them to content 1.
 
     if(isset($_SESSION) && $_SESSION['on'] == true){
-
+      header("Content-Type: plain/text");
       header("location:content1.php");
     }
 
