@@ -35,42 +35,40 @@ if($_SESSION['on'] == true){
             <meta name="author" content="Robert Jackson">
             <meta name="description" content="">
             <title>login.php</title>
-
             <link rel="stylesheet" href="style.css" type="text/css">
         </head>
         <body>
+        <div class="content">
+                <form method="post" action="" onsubmit="checkit();" id="login">
+                    <label for="username">Username: </label><input type="text" name="username" id="username" class="">
+                    <input type="submit"  value="Submit" id="submit">
+                </form>
 
-<form method="post" action="" onsubmit="checkit();" id="login">
-    <label for="username">Username: </label><input type="text" name="username" id="username" class="">
-    <input type="submit"  value="Submit" id="submit">
-</form>
+        </div>
+        <script type="application/javascript">
 
-<script type="application/javascript">
+            if(localStorage.getItem('username') == 'MISSING' ){
+                document.getElementById('username').value = localStorage.getItem('username');
+                document.getElementById('username').className = "missedElement";
+            }
 
-    if(localStorage.getItem('username') == 'MISSING' ){
-        document.getElementById('username').value = localStorage.getItem('username');
-        document.getElementById('username').className = "missedElement";
-    }
+            function checkit(){
 
-    function checkit(){
+                if(document.getElementById('username').value !== ''){
 
-        if(document.getElementById('username').value !== ''){
+                    document.getElementById('login').action = 'content1.php';
+                    localStorage.removeItem('username');
+                    document.getElementById('username').className = "";
 
-            document.getElementById('login').action = 'content1.php';
-            localStorage.removeItem('username');
-            document.getElementById('username').className = "";
+                }else{
 
-        }else{
+                    document.getElementById('login').action = 'content1.php';
+                    localStorage.setItem('username', 'MISSING');
+                }
+            }
 
-            document.getElementById('login').action = 'content1.php';
-            localStorage.setItem('username', 'MISSING');
-        }
-    }
-
-</script>
+        </script>
         </body>
     </html>
 
-
-<?php print_r($_SESSION); ?>
 

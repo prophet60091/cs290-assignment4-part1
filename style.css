@@ -1,6 +1,21 @@
 
-body{font-family: Arial; font-size:20px;}
+body{font-family: Arial; font-size:20px; background: url(images/FjeLbo3.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;}
 
+
+.content{
+    margin: 0 auto;
+    display: block;
+    padding: 20px;
+    background-color: rgba(240, 255, 255, 0.74);
+    width: 45%;
+    position: relative;
+    top: 200px;
+    /* left: 50%; */
+}
 input{font-size: 95%;
 height:30px;
 border-radius: 10px;

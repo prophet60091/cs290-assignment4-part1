@@ -17,7 +17,6 @@ if($_SESSION['on'] == false || $_GET['sessh'] == 'FALSE'){
     session_destroy();
     header("location:login.php");
 
-
 }else{
 
 ?>
@@ -28,26 +27,29 @@ if($_SESSION['on'] == false || $_GET['sessh'] == 'FALSE'){
     <meta name="author" content="Robert Jackson">
     <meta name="description" content="">
     <title>content2.php</title>
-    <link rel="stylesheet" href="" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
+<div class="content">
 <h1>Welcome to content 2!</h1>
 <?php
 
-    $logout = '<a href="' . $_SERVER['PHP_SELF'] . '"?sessh=FALSE> here </a>';
+    $logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=FALSE"> here </a>';
     $back = '<a href="content1.php"> back </a>';
 
-    echo "you've been here " . $_COOKIE[$_POST['username']] . ' times';
+    echo "You've been here " . $_COOKIE[$_COOKIE['username']] . ' times, ' . $_COOKIE['username'];
 
     ?><br/><?php
 
-    echo "Click" . $logout . " to return to the login screen.";
-    echo "Click" . $back . " to return to the previous page.";
+    echo "Click" . $logout . " to return to the login screen. ";
+    echo "Click" . $back . " to return to the previous page. ";
 
 ?>
 
-<section>Otherwise their ain't anything to do here!</section>
-    </body>
+<span>Otherwise their ain't anything to do here!</span>
+
+</div>
+</body>
 </html>
 
 <?php } ?>
