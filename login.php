@@ -21,7 +21,7 @@ To accomplish the above task you will want to work with loops to dynamically cre
  *
  *
  */
-print_r($_SESSION);
+
     ?>
     <!DOCTYPE html>
     <html>
@@ -67,5 +67,5 @@ print_r($_SESSION);
     </html>
 
 
-
+<?php print_r($_SESSION); ?>
 

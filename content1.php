@@ -10,9 +10,9 @@
  *
  *
  */
-//REceived logout info killing the session
+//Received logout info killing the session dir
 if($_GET){
-    $_SESSION['on']=0;
+    $_SESSION['on']= false;
     session_destroy();
     header("location:login.php");
 
@@ -42,7 +42,7 @@ $toLogin = '<a href="login.php"> here </a>';
 $logout = "<a href=" . $_SERVER['PHP_SELF'] ."?sessh=FALSE> here </a>";
 
 //If there is not a Post and no session, we don't know how the user got here send them back.
-if(!$_POST && $_SESSION['on'] == 0 ){
+if(!$_POST && $_SESSION['on'] == false ){
 
     session_destroy();
     header("location:login.php");
@@ -51,14 +51,13 @@ if(!$_POST && $_SESSION['on'] == 0 ){
 
     //User clicked login but didn't give a value send em back
     if(!$_POST['username']){
-
-        $_SESSION["on"] = 1;
+        session_destroy();
         echo "A username must be entered. Click" . $logout. " to return to the login screen.";
 
 
     }else{
             //Must be legit start a session
-            $_SESSION["on"] = 1;
+            $_SESSION["on"] = true;
 
             //First Time
             if(!isset($_COOKIE[$_POST['username']])){
@@ -87,6 +86,8 @@ if(!$_POST && $_SESSION['on'] == 0 ){
 };
 print_r($_SESSION);
 ?>
-
+        <section   >
+        <a href="content2.php">Content 2</a>
+        </section>
         </body>
 </html>
