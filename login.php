@@ -21,8 +21,13 @@ To accomplish the above task you will want to work with loops to dynamically cre
  *
  *
  */
+session_start();
 
-    ?>
+if($_SESSION['on'] == true){
+
+  header("location:content1.php");
+}
+?>
     <!DOCTYPE html>
     <html>
         <head lang="en">

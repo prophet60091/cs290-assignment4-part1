@@ -11,11 +11,12 @@
  *
  */
 
-if($_SESSION['on'] !== true){
+session_start();
+if($_SESSION['on'] == false || $_GET['sessh'] == 'FALSE'){
 
-    //user logging in starting the session
-    session_start();
+    session_destroy();
     header("location:login.php");
+
 
 }else{
 
@@ -26,48 +27,27 @@ if($_SESSION['on'] !== true){
     <meta charset="UTF-8">
     <meta name="author" content="Robert Jackson">
     <meta name="description" content="">
-    <title>content1.php</title>
-    <script src="" type="application/javascript"></script>
+    <title>content2.php</title>
     <link rel="stylesheet" href="" type="text/css">
 </head>
 <body>
+<h1>Welcome to content 2!</h1>
 <?php
 
-    $toLogin = '<a href="login.php"> here </a>';
-    $logout = "<a href=" . $_SERVER['PHP_SELF'] . "?sessh=FALSE> here </a>";
+    $logout = '<a href="' . $_SERVER['PHP_SELF'] . '"?sessh=FALSE> here </a>';
+    $back = '<a href="content1.php"> back </a>';
 
-    //If there is not a Post and no session, we don't know how the user got here send them back.
+    echo "you've been here " . $_COOKIE[$_POST['username']] . ' times';
 
-            //Must be legit start a session
-            $_SESSION["on"] = 1;
+    ?><br/><?php
 
-            //First Time
-            if (!isset($_COOKIE[$_POST['username']])) {
-                setcookie($_POST['username'], 1);
-                echo "This is your first visit here, " . $_POST['username'];
-                ?>
-                <br/>
-                <?php
-                echo "Click" . $logout . " to return to the login screen.";
+    echo "Click" . $logout . " to return to the login screen.";
+    echo "Click" . $back . " to return to the previous page.";
 
-            } else {
-                //Other than first time
-                $incCookie = $_COOKIE[$_POST['username']] + 1; // increment their visit count
-                $ckvar = $_POST['username']; //shortening their entry
-
-                setcookie($ckvar, $incCookie);
-
-                echo "you've been here " . $incCookie . ' times';
-                ?>
-                <br/>
-                <?php
-                echo "Click" . $logout . " to return to the login screen.";
-
-
-    }
-}
-print_r($_SESSION);
 ?>
 
+<section>Otherwise their ain't anything to do here!</section>
     </body>
 </html>
+
+<?php } ?>
