@@ -22,7 +22,13 @@ if(isset($_GET) &&  $_GET['sessh'] == 'logout'){
     session_destroy();
     header("location:login.php");
 
-}elseif((isset($_SESSION) && $_SESSION['on'] == true)){
+}elseif(!isset($_SESSION) || $_SESSION['on'] == false){
+
+    $_SESSION['on'] = false;
+    session_destroy();
+    header("location:login.php");
+
+}else{
 
 ?>
 <!DOCTYPE html>
@@ -48,11 +54,6 @@ if(isset($_GET) &&  $_GET['sessh'] == 'logout'){
 
     echo "Click" . $logout . " to return to the login screen. ";
     echo "Click" . $back . " to return to the previous page. ";
-    }else{
-
-        $_SESSION['on'] = false;
-        session_destroy();
-        header("location:login.php");
     }
     ?>
 

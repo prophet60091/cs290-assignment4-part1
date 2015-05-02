@@ -5,9 +5,6 @@ ini_set('display_errors', 1);
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 0);
 
-$toLogin = '<a href="login.php"> here </a>';
-$logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a>';
-$content2 = '<a href="content2.php"> Content 2 </a>';
 /**
  * User: Robert
  * Date: 4/27/2015
@@ -24,13 +21,20 @@ if((isset($_SESSION)) &&  (isset($_GET) && $_GET['sessh'] == 'logout')){
     $_SESSION['on'] = false;
     session_destroy();
     header("location:login.php");
+    die();
 
 }elseif((isset($_POST) && $_POST['username'] == '')){
 
   header("location:login.php");
   echo "A username must be entered. Click" . $logout . " to return to the login screen.";
+    die();
 
 }else{
+
+$toLogin = '<a href="login.php"> here </a>';
+$logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a>';
+$content2 = '<a href="content2.php"> Content 2 </a>';
+
 ?>
 <!DOCTYPE html>
 <html>
