@@ -1,4 +1,13 @@
 <?php
+session_start();//start a session if none
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('session.use_cookies', 1);
+ini_set('session.use_only_cookies', 0);
+
+$toLogin = '<a href="login.php"> here </a>';
+$logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a>';
+$content2 = '<a href="content2.php"> Content 2 </a>';
 /**
  * User: Robert
  * Date: 4/27/2015
@@ -10,15 +19,18 @@
  *
  *
  */
-session_start();
-//Received logout info killing the session dir
-if($_GET['sessh'] == 'FALSE'){
 
+if((isset($_SESSION)) &&  (isset($_GET) && $_GET['sessh'] == 'logout')){
+    $_SESSION['on'] = false;
     session_destroy();
     header("location:login.php");
 
-}
+}elseif((isset($_POST) && $_POST['username'] == '')){
 
+  header("location:login.php");
+  echo "A username must be entered. Click" . $logout . " to return to the login screen.";
+
+}else{
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,53 +46,36 @@ if($_GET['sessh'] == 'FALSE'){
     <h1>Welcome to Content 1</h1>
     <?php
 
-    $toLogin = '<a href="login.php"> here </a>';
-    $logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=FALSE"> here </a>';
-    $content2 = '<a href="content2.php"> Content 2 </a>';
+    if(isset($_SESSION)  && $_SESSION['on'] == true){
+        $_SESSION['visits']++;
 
-    //User clicked login but didn't give a value send em back, or they navigated  here without a session
-    if(!$_POST['username'] && $_SESSION["on"] == false ){
+        echo "You've been here " .  $_SESSION['visits'] . ' times, ' . $_SESSION['username'];
 
-        if($_SESSION["on"] == false){
-            header("location:login.php");
-        }
-        echo "A username must be entered. Click" . $logout. " to return to the login screen.";
+        ?><br/><?php
+
+        echo "Click" . $logout . " to return to the login screen.";
+        ?><br /><?php
+        echo "Click" . $content2 . " to go to content 2.";
+
+
 
     }else{
-        //Must be legit start a session
-        $_SESSION["on"] = true;
+        //Must be legit, first time login set some session vars
+        $_SESSION['on'] = true;
+        $_SESSION['username'] = $_POST['username'];
+        $_SESSION['visits'] = 1;
 
-        //First Time
-        if(!isset($_COOKIE[$_POST['username']])){
-            //set some cookies
-            setcookie($_POST['username'], 1);
-            setcookie('username', $_POST['username'] );
-            unset($_POST);
+        setcookie('visits',  $_SESSION['visits'], time()+30000);
+        setcookie('username', $_SESSION['username'], time()+30000);
 
-            echo "This is your first visit here, " .  $_COOKIE['username'] ;
-            ?><br /><?php
-            echo "Click" . $logout . " to return to the login screen.";
-            echo "Click" . $content2 . " to go to content 2.";
+        echo "This is your first visit here, " .  $_SESSION['username'] ;
+        ?><br /><?php
+        echo "Click" . $logout . " to return to the login screen.";
+        ?><br /><?php
+        echo "Click" . $content2 . " to go to content 2.";
 
-        }else{
-            //Other then first time
-            $incCookie =  $_COOKIE[$_POST['username']] + 1; // increment their visit count
-            $ckvar = $_POST['username']; //shortening their entry
-
-            setcookie($ckvar,  $incCookie);
-            unset($_POST);
-            echo "you've been here " .  $incCookie . ' times, ' .  $_COOKIE['username'];
-            ?>
-            <br />
-            <?php
-            echo "Click" . $content2 . " to go to content 2.";
-            ?>
-            <br />
-            <?php
-            echo "Click" . $logout . " to return to the login screen.";
-
-        }
-    };
+    }
+    }
 
     ?>
 </div>
