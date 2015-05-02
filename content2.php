@@ -3,25 +3,16 @@
  * User: Robert
  * Date: 4/27/2015
  * Time: 5:17 PM
- * This file should accept either a GET or POST for input.
- * The page should return a JSON object (remember, this is almost identical to an object literal in JavaScript) of the form
- * {"Type":"[GET|POST]","parameters":{"key1":"value1", ... ,"keyn":"valuen"}}.  If no key value pairs are passed it it should return {"Type":"[GET|POST]", "parameters":null}. You are welcome to use
- * built in JSON function in PHP to produce this output.
- *
+ * Assignment 4 content2.php
  *
  */
 // Check if user wanted to log out
 session_start();//start a session if none
-error_reporting(E_ALL);
-//ini_set('display_errors', 1);
-//ini_set('session.use_cookies', 1);
-//ini_set('session.use_only_cookies', 0);
 
 //set some links for later
 $logout = ' Click <a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a> to return to the login screen.';
 $content = '<a href="content1.php">Click for Content 1 </a>';
-print_r($_SESSION);
-print_r(session_status());
+
 // Check if user wanted to log out
 if (isset($_GET['sessh'])) {
 
@@ -31,7 +22,7 @@ if (isset($_GET['sessh'])) {
     die();
 };
 
-//second level
+//Check if thay are a valid user, i.e. the username is in the session
 if ((isset($_SESSION['username']))){
 
     ?>
@@ -47,15 +38,15 @@ if ((isset($_SESSION['username']))){
     <body>
     <div class="content">
         <h1>Welcome to Content 2</h1>
-       <?php
-        echo $logout;
-        ?><br/><?php
-        echo $content; ?>
+        <?php echo $logout; ?>
+        <br/>
+        <?php echo $content; ?>
     </div>
     </body>
     </html>
 <?php
 }else{
+    //they are aliens, get rid of them and make them log in
     $msg = "You must log on in to access this page ";
     $_SESSION['on']= -1;
     session_destroy();

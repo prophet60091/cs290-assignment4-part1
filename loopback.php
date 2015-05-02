@@ -36,14 +36,14 @@ function swapUndies($typeS, &$typeA){
 //Change the output based on GET or POST
 if($_GET){
 
-    echo swapUndies($aGet, $_GET);
+    return swapUndies($aGet, $_GET);
 
 }elseif($_POST){
 
-    echo swapUndies($aPOST, $_POST);
+    return swapUndies($aPOST, $_POST);
 
 }else{
 
-    echo '{"Type":"[GET|POST]", "Parameters":null}';
+    return '{"Type":"[GET|POST]", "Parameters":null}';
 }
 

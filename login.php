@@ -1,19 +1,16 @@
 <?php
 session_start();//start a session if none
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 0);
 $_SESSION['on'] = 1;
 
 /**
  * User: Robert
  * Date: 4/27/2015
  * Time: 5:17 PM
+ * * Assignment 4 login.php
 
  */
-//if the user tries to access the login screen again but didn't log out push them to content 1.
 
+//if the user tries to access the login screen again but didn't log out push them back to content 1.
 if(isset($_SESSION['on']) && $_SESSION['on'] > 1){
   header("Content-Type: plain/text");
   header("location:content1.php");
@@ -39,8 +36,9 @@ if(isset($_SESSION['on']) && $_SESSION['on'] > 1){
                 </form>
 
         </div>
-        <script type="application/javascript">
 
+        <script type="application/javascript">
+            //little java script to  fire on submission. Highlights the field when they didn't enter a username
             if(localStorage.getItem('username') == 'MISSING' ){
                 document.getElementById('username').value = localStorage.getItem('username');
                 document.getElementById('username').className = "missedElement";
