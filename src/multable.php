@@ -46,7 +46,7 @@ function outputMissing($para){
     foreach ($para as  $req) {
 
         if(!strstr($_SERVER['QUERY_STRING'], $req)){
-            $errMsg = $req .' was missing!';
+            $errMsg .= $req .' was missing! ';
 
         }
     }
