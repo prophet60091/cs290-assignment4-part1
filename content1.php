@@ -12,9 +12,9 @@
  */
 session_start();//start a session if none
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 0);
+//ini_set('display_errors', 1);
+//ini_set('session.use_cookies', 1);
+//ini_set('session.use_only_cookies', 0);
 
 //set some links for later
 $logout = ' Click <a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a> to return to the login screen.';
@@ -31,21 +31,25 @@ if (isset($_GET['sessh'])) {
 };
 
 //second level
-if ((isset($_POST['username']) || isset($_SESSION['username']))){
+if (isset($_POST['username'])){
     $_SESSION['on'] = 2; // setting this in case I want to use it for another feature
 
-if ((isset($_POST['username']) && $_POST['username'] == '')) {
+    if ((isset($_POST['username']) && $_POST['username'] == '')) {
 
-    header("location:login.php?msg=display", true);
-    echo "A username must be entered. Click" . $logout . " to return to the login screen.";
-    //good login
-} else {
+        header("location:login.php?msg=display", true);
 
-    $_SESSION['username'] = $_POST['username'];
-    $_SESSION['visits'] = 0;
-    $_SESSION['on'] = 3;
+        //good login
+    } else {
+
+        $_SESSION['username'] = $_POST['username'];
+        $_SESSION['visits'] = 0;
+        $_SESSION['on'] = 3;
+        unset($_POST);
+    }
 
 }
+
+if(isset($_SESSION['username'])){
 //now we can increase their sessionas we know this is a return visit
 $_SESSION['visits']++;
 

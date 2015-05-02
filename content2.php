@@ -13,14 +13,15 @@
 // Check if user wanted to log out
 session_start();//start a session if none
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 0);
+//ini_set('display_errors', 1);
+//ini_set('session.use_cookies', 1);
+//ini_set('session.use_only_cookies', 0);
 
 //set some links for later
 $logout = ' Click <a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a> to return to the login screen.';
 $content = '<a href="content1.php">Click for Content 1 </a>';
-
+print_r($_SESSION);
+print_r(session_status());
 // Check if user wanted to log out
 if (isset($_GET['sessh'])) {
 
