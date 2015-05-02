@@ -33,13 +33,26 @@ $errMsg = '';
      foreach ($para as  $req) {
 
         if(!strstr($_SERVER['QUERY_STRING'], $req)){
-            $errMsg = $req .' was missing!';
+            //$errMsg = $req .' was missing!';
            return false;
                break;
        }
     }
     return true;
 };
+
+function outputMissing($para){
+    global $errMsg;
+    foreach ($para as  $req) {
+
+        if(!strstr($_SERVER['QUERY_STRING'], $req)){
+            $errMsg = $req .' was missing!';
+
+        }
+    }
+
+};
+
 
 function checkInt(){
     global $errMsg;
@@ -128,6 +141,9 @@ if(!checkMissing($expPara) || !checkInt() || !checkMinMax()){
         <body>
 
             <?php
+            if(!checkMissing($expPara)){
+                outputMissing($expPara);
+            }
             echo $errMsg;
             ?>
 
