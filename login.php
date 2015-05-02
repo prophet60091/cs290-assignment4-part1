@@ -13,7 +13,7 @@ ini_set('session.use_only_cookies', 0);
  */
 //if the user tries to access the login screen again but didn't log out push them to content 1.
 
-if(isset($_SESSION) && $_SESSION['on'] == true){
+if(isset($_SESSION['on']) && $_SESSION['on'] == true){
   header("Content-Type: plain/text");
   header("location:content1.php");
 }
