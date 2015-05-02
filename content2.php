@@ -1,10 +1,4 @@
 <?php
-session_start();//start a session if none
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 0);
-
 /**
  * User: Robert
  * Date: 4/27/2015
@@ -17,50 +11,58 @@ ini_set('session.use_only_cookies', 0);
  *
  */
 // Check if user wanted to log out
-if(isset($_GET['sessh']) &&  $_GET['sessh'] == 'logout'){
-    $_SESSION = array();
+session_start();//start a session if none
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('session.use_cookies', 1);
+ini_set('session.use_only_cookies', 0);
+
+//set some links for later
+$logout = ' Click <a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a> to return to the login screen.';
+$content = '<a href="content1.php">Click for Content 1 </a>';
+
+// Check if user wanted to log out
+if (isset($_GET['sessh'])) {
+
+    $_SESSION['on'] = -1;
     session_destroy();
     header("location:login.php", true);
     die();
+};
 
-// make sure user is not an alien
-}elseif(session_status() < 2 || (isset($_SESSION['on']) && $_SESSION['on']== false)){
+//second level
+if ((isset($_SESSION['username']))){
 
-    $_SESSION['on'] = array();
-    session_destroy();
-    header("location:login.php", true);
-//Good now you can display
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta name="author" content="Robert Jackson">
+        <meta name="description" content="">
+        <title>content2.php</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+    </head>
+    <body>
+    <div class="content">
+        <h1>Welcome to Content 2</h1>
+       <?php
+        echo $logout;
+        ?><br/><?php
+        echo $content; ?>
+    </div>
+    </body>
+    </html>
+<?php
 }else{
+    $msg = "You must log on in to access this page ";
+    $_SESSION['on']= -1;
+    session_destroy();
+    header("location:login.php?msg=$msg", true);
+    die(); //end second level
+
+
+
+}
 
 ?>
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta name="author" content="Robert Jackson">
-    <meta name="description" content="">
-    <title>content2.php</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-</head>
-<body>
-<div class="content">
-    <h1>Welcome to content 2!</h1>
-    <?php
-
-    $logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a>';
-    $back = '<a href="content1.php"> back </a>';
-
-    echo "You've been here " . $_SESSION['visits'] . ' times, ' . $_SESSION['username'];
-
-    ?><br/><?php
-
-    echo "Click" . $logout . " to return to the login screen. ";
-    echo "Click" . $back . " to return to the previous page. ";
-    }
-    ?>
-
-<span>Otherwise their ain't anything to do here!</span>
-
-</div>
-</body>
-</html>

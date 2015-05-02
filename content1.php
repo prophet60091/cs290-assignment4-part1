@@ -1,10 +1,4 @@
 <?php
-session_start();//start a session if none
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 0);
-
 /**
  * User: Robert
  * Date: 4/27/2015
@@ -16,36 +10,44 @@ ini_set('session.use_only_cookies', 0);
  *
  *
  */
+session_start();//start a session if none
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('session.use_cookies', 1);
+ini_set('session.use_only_cookies', 0);
+
+//set some links for later
+$logout = ' Click <a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a> to return to the login screen.';
+$content = '<a href="content2.php">Click for Content 2 </a>';
+
 
 // Check if user wanted to log out
-// Check if user wanted to log out
-if(isset($_GET['sessh']) &&  $_GET['sessh'] == 'logout'){
-    echo "logging out";
-    //$_SESSION = array();
+if (isset($_GET['sessh'])) {
+
+    $_SESSION['on'] = -1;
     session_destroy();
     header("location:login.php", true);
     die();
+};
 
-// make sure user is not an alien
-}elseif(session_status() < 2 || (isset($_SESSION['on']) && $_SESSION['on']== false)) {
-    echo "session not set";
-    $_SESSION = array();
-    session_destroy();
-   // header("location:login.php", true);
-    die();
+//second level
+if ((isset($_POST['username']) || isset($_SESSION['username']))){
+    $_SESSION['on'] = 2; // setting this in case I want to use it for another feature
 
-// now make sure we got an actual name with the post
-}elseif((isset($_POST['username']) && $_POST['username'] == '')){
-    echo "post was blank";
-  header("location:login.php", true);
-  echo "A username must be entered. Click" . $logout . " to return to the login screen.";
-    die();
+if ((isset($_POST['username']) && $_POST['username'] == '')) {
 
-}else{
+    header("location:login.php?msg=display", true);
+    echo "A username must be entered. Click" . $logout . " to return to the login screen.";
+    //good login
+} else {
 
-$toLogin = '<a href="login.php"> here </a>';
-$logout = '<a href="' . $_SERVER['PHP_SELF'] . '?sessh=logout"> here </a>';
-$content2 = '<a href="content2.php"> Content 2 </a>';
+    $_SESSION['username'] = $_POST['username'];
+    $_SESSION['visits'] = 0;
+    $_SESSION['on'] = 3;
+
+}
+//now we can increase their sessionas we know this is a return visit
+$_SESSION['visits']++;
 
 ?>
 <!DOCTYPE html>
@@ -62,38 +64,24 @@ $content2 = '<a href="content2.php"> Content 2 </a>';
     <h1>Welcome to Content 1</h1>
     <?php
 
-    if(isset($_SESSION)  && $_SESSION['on'] == true){
-        $_SESSION['visits']++;
-
-        echo "You've been here " .  $_SESSION['visits'] . ' times, ' . $_SESSION['username'];
-
-        ?><br/><?php
-
-        echo "Click" . $logout . " to return to the login screen.";
-        ?><br /><?php
-        echo "Click" . $content2 . " to go to content 2.";
-
-
-
-    }else{
-        //Must be legit, first time login set some session vars
-        $_SESSION['on'] = true;
-        $_SESSION['username'] = $_POST['username'];
-        $_SESSION['visits'] = 1;
-
-        setcookie('visits',  $_SESSION['visits'], time()+30000);
-        setcookie('username', $_SESSION['username'], time()+30000);
-
-        echo "This is your first visit here, " .  $_SESSION['username'] ;
-        ?><br /><?php
-        echo "Click" . $logout . " to return to the login screen.";
-        ?><br /><?php
-        echo "Click" . $content2 . " to go to content 2.";
-
-    }
-    }
-
-    ?>
-</div>
+    echo "You've been here " . $_SESSION['visits'] . ' times, ' . $_SESSION['username'];
+    ?><br/><?php
+    echo $logout;
+    ?><br/><?php
+    echo $content; ?>
+    </div>
 </body>
 </html>
+<?php
+    }else{
+    $msg = "You must log on in to access this page ";
+    $_SESSION['on']= -1;
+    session_destroy();
+    header("location:login.php?msg=$msg", true);
+    die(); //end second level
+
+
+
+}
+
+?>

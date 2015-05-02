@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('session.use_cookies', 1);
 ini_set('session.use_only_cookies', 0);
+$_SESSION['on'] = 1;
 
 /**
  * User: Robert
@@ -13,12 +14,12 @@ ini_set('session.use_only_cookies', 0);
  */
 //if the user tries to access the login screen again but didn't log out push them to content 1.
 
-if(isset($_SESSION['on']) && $_SESSION['on'] == true){
+if(isset($_SESSION['on']) && $_SESSION['on'] > 1){
   header("Content-Type: plain/text");
   header("location:content1.php");
 }
 
-//HTML headers
+//HTML
 ?>
     <!DOCTYPE html>
     <html>
@@ -31,6 +32,7 @@ if(isset($_SESSION['on']) && $_SESSION['on'] == true){
         </head>
         <body>
         <div class="form">
+            <?php if(isset($_GET['msg'])){ echo 'A username must be entered.'; } ?>
                 <form method="post" action="" onsubmit="checkit();" id="login">
                     <label for="username">Username: </label><input type="text" name="username" id="username" class="">
                     <input type="submit"  value="Submit" id="submit">
