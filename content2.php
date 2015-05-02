@@ -17,14 +17,14 @@ ini_set('session.use_only_cookies', 0);
  *
  */
 // Check if user wanted to log out
-if(isset($_GET) &&  $_GET['sessh'] == 'logout'){
+if(isset($_GET['sessh']) &&  $_GET['sessh'] == 'logout'){
     $_SESSION = array();
     session_destroy();
     header("location:login.php", true);
     die();
 
 // make sure user is not an alien
-}elseif(!isset($_SESSION['on'])){
+}elseif(session_status() < 2 || (isset($_SESSION['on']) && $_SESSION['on']== false)){
 
     $_SESSION['on'] = array();
     session_destroy();

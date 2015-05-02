@@ -19,23 +19,24 @@ ini_set('session.use_only_cookies', 0);
 
 // Check if user wanted to log out
 // Check if user wanted to log out
-if(isset($_GET) &&  $_GET['sessh'] == 'logout'){
-    $_SESSION = array();
+if(isset($_GET['sessh']) &&  $_GET['sessh'] == 'logout'){
+    echo "logging out";
+    //$_SESSION = array();
     session_destroy();
     header("location:login.php", true);
     die();
 
 // make sure user is not an alien
-}elseif(!isset($_SESSION['on'])) {
-
-    $_SESSION['on'] = array();
+}elseif(session_status() < 2 || (isset($_SESSION['on']) && $_SESSION['on']== false)) {
+    echo "session not set";
+    $_SESSION = array();
     session_destroy();
-    header("location:login.php", true);
+   // header("location:login.php", true);
     die();
 
 // now make sure we got an actual name with the post
 }elseif((isset($_POST['username']) && $_POST['username'] == '')){
-
+    echo "post was blank";
   header("location:login.php", true);
   echo "A username must be entered. Click" . $logout . " to return to the login screen.";
     die();
